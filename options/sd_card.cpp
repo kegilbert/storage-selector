@@ -17,10 +17,12 @@
 #ifdef DEVICE_SPI
 
 #include "SDBlockDevice.h"
+#include "ProfilingBlockDevice.h"
 
 SDBlockDevice* _storage_selector_SD_CARD() {
     static SDBlockDevice bd(MBED_CONF_SD_SPI_MOSI, MBED_CONF_SD_SPI_MISO, MBED_CONF_SD_SPI_CLK, MBED_CONF_SD_SPI_CS);
-    return &bd;
+    static ProfilingBlockDevice pbd(&bd);
+    return (SDBlockDevice*) &pbd;
 }
 
 #endif //DEVICE_SPI
